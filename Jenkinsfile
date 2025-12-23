@@ -3,9 +3,9 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Test') {
             steps {
-                git 'https://github.com/achalgothe/my-docker-app.git'
+                sh 'pytest test_app.py'
             }
         }
 
@@ -17,9 +17,13 @@ pipeline {
 
         stage('Docker Login') {
             steps {
-                sh '''
-                docker login -u achalgothe -p YOUR_DOCKER_TOKEN
-                '''
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                }
             }
         }
 
@@ -40,5 +44,3 @@ pipeline {
         }
     }
 }
-        
-        
