@@ -1,6 +1,7 @@
 stage('Deploy') {
   steps {
     sh '''
+       set +e
       docker stop myapp || true
       docker rm myapp || true
 
