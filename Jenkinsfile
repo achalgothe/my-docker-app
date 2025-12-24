@@ -27,9 +27,7 @@ pipeline {
                     '''
                 }
             }
-        }
-    }
-}
+
         
 stage('Deploy') {
     steps {
@@ -38,6 +36,7 @@ stage('Deploy') {
         docker pull achalgothe/my-app:latest
         docker run -d --name myapp -p 80:80 achalgothe/my-app:latest
         '''
+      }
     }
+ }
 }
-        
