@@ -1,14 +1,7 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/achalgothe/my-docker-app.git'
-            }
-        }
-
-        stage('Build') {
+    stage('Build') {
             steps {
                 sh 'docker build -t achalgothe/myapp:latest .'
             }
