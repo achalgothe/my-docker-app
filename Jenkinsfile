@@ -5,7 +5,7 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        git 'https://github.com/achalgothe/your-repo.git'
+        git 'https://github.com/achalgothe/my-docker-app.git'
       }
     }
 
