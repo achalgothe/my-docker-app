@@ -2,45 +2,51 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "dockerhub_username/cicd-app"
+        IMAGE_NAME = "achalgothe/my-docker-app"
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                echo "Checkout from GitHub"
+                echo "Checkout Stage"
                 git branch: 'main',
-                    url: 'https://github.com/username/repo-name.git'
+                    url: 'https://github.com/achalgothe/my-docker-app.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo "Docker Build"
+                echo "Build Stage"
                 sh 'docker build -t $IMAGE_NAME:latest .'
             }
         }
 
         stage('Test') {
             steps {
-                echo "Running Tests"
+                echo "Test Stage"
                 sh 'docker run --rm $IMAGE_NAME:latest echo Test Passed'
             }
         }
 
         stage('Push') {
             steps {
-                echo "Push Image"
-                sh 'echo Skipping push for now'
+                echo "Push Stage"
+                sh 'echo Docker Push (demo)'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo "Deploy Stage"
-                sh 'echo App Deployed'
+                sh 'echo Deploy to EC2 (demo)'
             }
+        }
+    }
+
+    post {
+        success {
+            echo "ALL 5 STAGES COMPLETED SUCCESSFULLY"
         }
     }
 }
