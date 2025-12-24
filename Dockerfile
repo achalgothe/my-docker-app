@@ -1,2 +1,1 @@
-FROM alpine
-CMD ["echo","Hello CI/CD Pipeline"]
+EXPOSE 5000
