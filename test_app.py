@@ -1,2 +1,1 @@
-def test_dummy():
-    assert 1 == 1
+return "Hello from CI/CD  - Pipeline Working!"
