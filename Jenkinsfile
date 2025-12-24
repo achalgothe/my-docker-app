@@ -1,16 +1,17 @@
 pipeline {
     agent any
-    stages{
-        
-    stage('Build') {
-            steps {
-                sh 'docker build -t achalgothe/myapp:latest .'
-            }
-        }
+
+    stages {
 
         stage('Test') {
             steps {
-                sh 'echo "Running tests"'
+                echo 'Running tests'
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                sh 'docker build -t achalgothe/myapp:latest .'
             }
         }
 
