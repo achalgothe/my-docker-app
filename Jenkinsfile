@@ -10,8 +10,9 @@ pipeline {
         }
 
         stage('Build Image') {
+             stage('Build') {
             steps {
-                sh 'docker build -t achalgothe/myapp:latest .'
+                sh 'docker build -t my-app .'
             }
         }
 
@@ -20,14 +21,9 @@ pipeline {
                 sh 'docker push achalgothe/myapp:latest'
             }
         }
-
-        stage('Deploy') {
+          stage('Deploy') {
             steps {
-                sh '''
-                  docker stop myapp || true
-                  docker rm myapp || true
-                  docker run -d --name myapp -p 5000:5000 achalgothe/myapp:latest
-                '''
+                sh 'docker run -d -p 80:80 my-app'
             }
         }
     }
