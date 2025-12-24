@@ -14,21 +14,30 @@ pipeline {
                 sh 'docker build -t achalgothe/my-app:latest .'
             }
         }
-
-        stage('Push Image') {
+ stage('Push Image') {
             steps {
-                sh 'docker push achalgothe/my-app:latest'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh '''
-                docker stop my-app || true
-                docker rm my-app || true
-                docker run -d -p 80:80 --name my-app achalgothe/my-app:latest
-                '''
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: ''DOCKER_PASS'
+                )]) {
+                    sh '''
+                    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    docker push achalgothe/my-app:latest
+                    '''
+                }
             }
         }
     }
 }
+        
+stage('Deploy') {
+    steps {
+        sh '''
+        docker rm -f myapp || true
+        docker pull achalgothe/my-app:latest
+        docker run -d --name myapp -p 80:80 achalgothe/my-app:latest
+        '''
+    }
+}
+        
